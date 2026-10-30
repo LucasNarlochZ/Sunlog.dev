@@ -1,9 +1,7 @@
-name: Deploy to Production
+name: VPS deployment (retired)
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 concurrency:
   group: production-deploy
@@ -21,6 +19,7 @@ env:
 
 jobs:
   deploy:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     environment:
       name: production
