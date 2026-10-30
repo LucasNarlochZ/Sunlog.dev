@@ -3,7 +3,7 @@ set -euo pipefail
 cd "${DEPLOY_PATH:?DEPLOY_PATH is required}"
 exec 9>.deploy.lock
 flock -n 9
-compose=(docker compose --env-file .env -f infra/docker-compose.yml -f infra/docker-compose.prod.yml -f infra/docker-compose.homelab.yml)
+compose=(docker compose --env-file .env -f infra/docker-compose.yml -f infra/docker-compose.prod.yml -f infra/docker-compose.homelab.yml -f infra/docker-compose.homelab-images.yml)
 "${compose[@]}" config --quiet
 /snap/bin/aws ecr get-login-password --region "${AWS_REGION:-us-east-1}" | docker login --username AWS --password-stdin "${ECR_REGISTRY:-242201312839.dkr.ecr.us-east-1.amazonaws.com}"
 "${compose[@]}" pull

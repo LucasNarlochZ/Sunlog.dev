@@ -1,0 +1,7 @@
+services:
+  front-end:
+    image: ${AWS_ECR_PREFIX}/sunlog.dev/frontend:homelab
+  api:
+    image: ${AWS_ECR_PREFIX}/sunlog.dev/api:homelab
+  worker:
+    image: ${AWS_ECR_PREFIX}/sunlog.dev/worker:homelab
