@@ -10,5 +10,6 @@ compose=(docker compose --env-file .env -f infra/docker-compose.yml -f infra/doc
 "${compose[@]}" up -d --wait postgres redis rabbitmq
 "${compose[@]}" run --rm --no-deps -v "$PWD/backend/migrations:/app/migrations:ro" -v "$PWD/infra/migration.config.cjs:/app/migration.config.cjs:ro" api npx --no-install sequelize-cli db:migrate --config /app/migration.config.cjs --env production
 "${compose[@]}" up -d --wait
-"${compose[@]}" exec -T nginx curl --fail --silent --show-error --retry 30 --retry-delay 2 --retry-connrefused -o /dev/null http://127.0.0.1/
-"${compose[@]}" exec -T nginx curl --fail --silent --show-error --retry 30 --retry-delay 2 --retry-connrefused -o /dev/null http://127.0.0.1/api
+"${compose[@]}" exec -T nginx nginx -s reload
+"${compose[@]}" exec -T nginx curl --location --fail --silent --show-error --retry 30 --retry-delay 2 --retry-connrefused -o /dev/null http://127.0.0.1/
+"${compose[@]}" exec -T nginx curl --location --fail --silent --show-error --retry 30 --retry-delay 2 --retry-connrefused -o /dev/null http://127.0.0.1/api/
